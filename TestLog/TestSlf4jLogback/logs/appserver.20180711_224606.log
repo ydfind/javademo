@@ -1,0 +1,3 @@
+[2018-07-11 22:46:06.576] [main                                ] [DEBUG] [MainAppLogger                       :52  ] - it is a debug testclass ch.qos.logback.classic.Logger
+[2018-07-11 22:46:06.599] [main                                ] [INFO ] [MainAppLogger                       :54  ] - it is a info test
+[2018-07-11 22:46:06.600] [main                                ] [WARN ] [MainAppLogger                       :55  ] - it is a warn test
