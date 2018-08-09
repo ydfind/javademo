@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- <param name="ConversionPattern" value="[log2][%-5p][%d{yyyy-MM-dd HH:mm:ss:SSS}][method:%l] - %m%n" /> -->
+<log4j:configuration>
+    <appender name="Console2" class="org.apache.log4j.ConsoleAppender">        
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[log2][%-5p][%d{yyyy-MM-dd HH:mm:ss:SSS}][method:%l] - %m%n" />
+        </layout>
+    </appender>
+    <appender name="LogFile" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="logs/ssh/sys.log" />
+        <param name="Append" value="true" />
+        <param name="encoding" value="utf-8"/>
+        <param name="datePattern" value="'.'yyyyMMdd-HHmmss"/>
+        <!-- 
+        <param name="threshold" value="DEBUG"/> 
+        <param name="encoding" value="GB2312"/>
+        <param name="MaxBackupIndex" value="10" /> 
+        <param name="MaxFileSize" value="10KB" />
+        -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[log2][%-5p][%d{yyyy-MM-dd HH:mm}][method:%l] - %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="DEBUG" />
+            <param name="levelMax" value="ERROR" />
+            <param name="acceptOnMatch" value="true" />
+        </filter>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+        	<param name="levelToMatch" value="ERROR"/>
+        	<param name="acceptOnMatch" value="FALSE"/>
+        </filter>
+    </appender>
+    <appender name="ErrorFile" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="logs/ssh/sys-err.log" />
+        <param name="Append" value="true" />
+        <param name="encoding" value="utf-8"/>
+        <!-- 
+        <param name="threshold" value="DEBUG"/> 
+        <param name="encoding" value="GB2312"/>
+        <param name="MaxBackupIndex" value="10" /> 
+        -->
+        <param name="MaxFileSize" value="10KB" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[log2][%-5p][%d{yyyy-MM-dd HH:mm}][method:%l] - %m%n" />
+        </layout> 
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="WARN" />
+            <param name="levelMax" value="ERROR" />
+            <param name="acceptOnMatch" value="true" />
+        </filter>
+    </appender>
+    <appender name="DebugFile" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="logs/sys-bug.log" />
+        <param name="Append" value="true" />
+        <param name="encoding" value="utf-8"/>
+        <param name="MaxFileSize" value="10kb" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[log2][%-5p][%d{yyyy-MM-dd HH:mm}][method:%l] - %m%n" />
+        </layout> 
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="debug" />
+            <param name="levelMax" value="debug" />
+            <param name="acceptOnMatch" value="true" />
+        </filter>
+    </appender>
+
+    <root>
+        <level value ="TRACE"/>
+        <appender-ref ref="Console2"/>
+        <appender-ref ref="LogFile"/>
+        <appender-ref ref="ErrorFile"/>
+        <appender-ref ref="DebugFile"/>
+    </root>
+
+</log4j:configuration>
