@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.4.dtd">
+<struts>
+	<!-- struts2的action必须放在一个指定的包空间下定义 -->
+	<package name="demo" namespace="/" extends="struts-default">
+
+		<action name="index">
+			<result>/index.html</result>
+		</action>
+
+		<action name="customerAction_*" class="com.ydfind.demo.maven.CustomerAction"
+			method="{1}">
+			<result name="success">/index.html</result>
+		</action>
+	</package>
+</struts>
