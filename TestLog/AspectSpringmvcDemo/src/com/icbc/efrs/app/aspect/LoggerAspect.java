@@ -52,7 +52,7 @@ public class LoggerAspect {
     @AfterReturning(returning = "ret", pointcut = "log()")
     public void doAfterReturning(Object ret) {
         System.out.println("----------------------@AfterReturning---------------------");
-        logger.info("return={}", ret.toString());
+//        logger.info("return={}", ret.toString());
     }
 
 }
