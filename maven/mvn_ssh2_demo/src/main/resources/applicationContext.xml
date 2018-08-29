@@ -1,0 +1,76 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xmlns:tx="http://www.springframework.org/schema/tx" 
+   xmlns:aop="http://www.springframework.org/schema/aop" 
+   xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+   
+   <context:property-placeholder location="classpath:db.properties"/>
+   <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+   		<property name="driverClass" value="${jdbc.driverClass}"></property>
+   		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+   		<property name="user" value="${jdbc.username}"></property>
+   		<property name="password" value="${jdbc.password}"></property>
+   		
+   </bean>
+   <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="configLocations" value="classpath:hibernate.cfg.xml"></property>
+   </bean>
+   <!-- 配置事务管理器 -->
+   <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+   </bean>
+   <!-- xml方式管理事务 -->
+   <!-- 配置通知：具体增强逻辑 -->
+	<!-- 
+	<tx:method name="find*" read-only="true"/>
+	 -->
+   <tx:advice id="txAdvice">
+   		<tx:attributes>
+   			<tx:method name="save*"/>
+   			<tx:method name="update*"/>
+   			<tx:method name="delete*"/>
+   			<tx:method name="*"/>
+   		</tx:attributes>
+   </tx:advice>
+   <!-- 配置AOP 
+   <aop:config>
+   		<aop:pointcut expression="" id=""/>
+   </aop:config>
+   -->
+   <!-- xml方式事务管理 -->
+   
+   
+   
+   <!-- 注解方式事务管理 -->
+   <!-- 1.开启注解驱动;2.在service类上或者方法上使用注解@Transactional 
+   <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">   
+        <property name="sessionFactory" ref="sessionFactory"></property>   
+    </bean>  
+    <tx:annotation-driven transaction-manager="transactionManager"/>  
+   <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+   -->
+   
+   
+   <bean id="customerDao" class="com.ydfind.demo.maven.dao.impl.CustomerDaoImpl">
+   		<property name="sessionFactory" ref="sessionFactory"></property>
+   </bean>
+   <bean id="customerService" class="com.ydfind.demo.maven.service.impl.CustomerServiceImpl">
+   		<property name="customerDao" ref="customerDao"></property>
+   </bean>
+   
+   <!-- 配置action对象 -->
+   <bean id="customerAction" class="com.ydfind.demo.maven.action.CustomerAction" scope="prototype">
+   		<property name="customerService" ref="customerService"></property>
+   </bean>
+
+</beans>

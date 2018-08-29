@@ -47,4 +47,80 @@ public class AppController {
 		System.out.println("--------------------------");
 		return "test";
 	}
+	// 下载文件的一个示例
+	@GetMapping(value = "/down", produces = "text/plain;charset=utf-8")
+	@ApiOperation(httpMethod = "GET", value = "请求后端Json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public void getDownData(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("-----------------------start--------------------------------");
+//		//文件名称
+//	    String[] names={"one.jpg","two.jpg","three.jpg","four.jpg"};
+//	    //四个文件流
+//	    FileInputStream input1 = new FileInputStream(new File("文件路径"));
+//	    FileInputStream input2 = new FileInputStream(new File("文件路径"));
+//	    FileInputStream input3 = new FileInputStream(new File("文件路径"));
+//	    FileInputStream input4 = new FileInputStream(new File("文件路径"));
+//	    FileInputStream[] inputs={input1,input2,input3,input4};
+	    //ZIP打包图片
+		String filename = "D:\\Software Package\\jar\\logback-1.2.3.zip";
+	    File zipFile = new File(filename);
+	    byte[] buf = new byte[1024];
+	    int len;
+//	    ZipOutputStream zout=new ZipOutputStream(new FileOutputStream(zipFile));
+//	    for (int i = 0; i < inputs.length; i++) { 
+//	      FileInputStream in =inputs[i]; 
+//	      zout.putNextEntry(new ZipEntry(names[i]));  
+//	      while ((len = in.read(buf)) > 0) { 
+//	        zout.write(buf, 0, len); 
+//	      } 
+//	      zout.closeEntry(); 
+//	      in.close(); 
+//	    }
+//	    zout.close();
+	    //下载图片
+	    FileInputStream zipInput = null;
+		try {
+			zipInput = new FileInputStream(zipFile);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    OutputStream out = null;
+		try {
+			out = response.getOutputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//	    response.setContentType("application/octet-stream");
+		String returnfile = "";
+		int temp = filename.lastIndexOf("/");
+		int lastindex = filename.lastIndexOf("\\");
+		if(lastindex > temp)
+			temp = lastindex;
+		returnfile = filename.substring(temp + 1);
+	    response.setHeader("Content-Disposition", "attachment; filename=" + returnfile);
+	    try {
+			while ((len=zipInput.read(buf))!= -1){ 
+			  out.write(buf,0,len); 
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    try {
+			zipInput.close();
+		    out.flush();
+		    out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("-----------------------end--------------------------------");
+	    //删除压缩包
+	    //zipFile.delete();
+	    
+//	    
+//	    return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),    
+//                headers, HttpStatus.CREATED); 
+	}
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "./log4j.dtd">
+<log4j:configuration>
+	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%-d{yyyy-MM-dd HH:mm:ss.SSS}][%p][%t] %X{operationName} %X{userId} - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender class="org.apache.log4j.RollingFileAppender" name="efrsapp-LOG">
+	  <param name="Threshold" value="ALL" />
+	  <param name="Encoding" value="UTF-8" />
+	  <param name="File" value="/datafs/washome/efris/app/sys.log" /> 
+	  <param name="Append" value="true" />
+	  <param name="MaxFileSize" value="10MB" />
+	  <param name="MaxBackupIndex" value="200" />
+	  <layout class="org.apache.log4j.PatternLayout">
+	  	<param name="ConversionPattern" value="[%-d{yyyy-MM-dd HH:mm:ss}][%p][%t] - %m %n" />
+	  </layout>
+	</appender>
+	
+	<appender class="org.apache.log4j.RollingFileAppender" name="ERR-LOG">
+	  <param name="Encoding" value="UTF-8" />
+	  <param name="File" value="/datafs/washome/efris/app/sys-err.log" /> 
+	  <param name="Append" value="true" />
+	  <param name="MaxFileSize" value="10MB" />
+	  <param name="MaxBackupIndex" value="200" />
+	  <layout class="org.apache.log4j.PatternLayout">
+	  	<param name="ConversionPattern" value="[%-d{yyyy-MM-dd HH:mm:ss}][%p][%t] - %m %n" />
+	  </layout>
+	  <filter class = "org.apache.log4j.varia.LevelRangeFilter">
+	  	<param name="levelMin" value="ERROR"/>
+	  	<param name="levelMax" value="ERROR"/>
+	  	<param name="acceptOnMatch" value="true"/>
+	  </filter>
+	</appender>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="efrsapp-LOG" />
+		<appender-ref ref="ERR-LOG" />
+	</root>
+</log4j:configuration>
