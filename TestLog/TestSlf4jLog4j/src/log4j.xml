@@ -34,11 +34,28 @@
 	  	<param name="acceptOnMatch" value="true"/>
 	  </filter>
 	</appender>
+	<!-- 设置名为mylog的logger单独输出到一个文件 -->
+	<appender name="myAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="Append" value="true"/>
+		<param name="File" value="./log/mylog.log"/>
+		<param name="encoding" value="UTF-8"/>
+		<param name="MaxFileSize" value="10MB"/>
+		<param name="MaxBackupIndex" value="50"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss,SSS}-%c{1}-%m %n"/>
+		</layout>
+	</appender>
+	<logger name="mylog" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="myAppender"/>
+	</logger>
+	
 
 	<root>
 		<level value="INFO" />
 		<appender-ref ref="consoleAppender" />
 		<appender-ref ref="efrsapp-LOG" />
 		<appender-ref ref="ERR-LOG" />
+		<appender-ref ref="myAppender" />
 	</root>
 </log4j:configuration>
