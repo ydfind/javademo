@@ -1,4 +1,4 @@
-package com.ydfind;
+﻿package com.ydfind;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,10 +6,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ydfind.service.ElasticService;
 
-/**
- * @author liuweibo
- * @date 2018/5/9
- */
 public class ClientMain {
 	private static Logger logger = LoggerFactory.getLogger(ClientMain.class);
 

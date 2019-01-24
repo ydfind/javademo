@@ -90,7 +90,7 @@ dataLogDir=D:\ProgramData\zookeeper\log
                                http://code.alibabatech.com/schema/dubbo
                                http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-        <dubbo:application name="dubbo-server" owner="lwb" />
+        <dubbo:application name="dubbo-server" owner="ydfind" />
         <!-- zookeeper注册中心 -->
         <dubbo:registry address="zookeeper://127.0.0.1:2181" />
         <dubbo:protocol contextpath="dubbo" port="20881" />
@@ -246,7 +246,7 @@ dataLogDir=D:\ProgramData\zookeeper\log
                                http://code.alibabatech.com/schema/dubbo
                                http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-        <dubbo:application name="consumer-of-dubbo-demo" />
+        <dubbo:application name="dubbo-consumer" />
 
         <dubbo:registry address="zookeeper://127.0.0.1:2181" />
 
